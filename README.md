@@ -4,7 +4,7 @@
 </p>
 <br></br>
 
-## Descrição.
+## Descrição
 
 
 ```sh
@@ -25,7 +25,7 @@
 - `Buscar musicas` 
 - `Pular, voltar e pausar musicas`
 
-## Executar a aplicação.
+## Executar a aplicação
 Para executar a aplicação, execute o seguinte comando no terminal:
 ```sh
 npm start | yarn start
