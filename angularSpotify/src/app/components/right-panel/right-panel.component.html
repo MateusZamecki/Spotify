@@ -1,0 +1,13 @@
+<div>
+  <input type="text" [(ngModel)]="search" placeholder="Search" (keyup.enter)="onKeyUpEvent(search)">
+  <fa-icon class="icon" [icon]="searchIcon" (click)="searchMusic(search)"></fa-icon>
+</div>
+<div>
+  <app-menu-button
+    *ngFor="let song of songsResult"
+      [description]="song.title"
+      [selected]="menuOptions === song.id"
+      (click)="playMusic(song)">
+      <fa-icon [icon]="musicIcon"></fa-icon>
+  </app-menu-button>
+</div>

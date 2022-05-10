@@ -15,12 +15,13 @@ export class AuthenticatedGuard implements CanLoad {
     route: Route,
     segments: UrlSegment[]): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       const token = localStorage.getItem('token');
-      if(!token){
+
+      if(!token) {
         return this.unauthenticated();
       }
 
-      return new Promise((res) => {
-        const usuario = this.spotifyService.initializeUser();
+      return new Promise(async (res) => {
+        const usuario = await this.spotifyService.initializeUser();
         if(usuario){
           res(true);
         }else{
