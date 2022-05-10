@@ -1,0 +1,38 @@
+@import 'variables';
+
+:host{
+  background-color: $white;
+  padding: 25px 20px;
+  box-shadow: -10px 1px 15px $shadow-menu;
+  input{
+    width: 100%;
+    padding: 10px 38px 10px 10px;
+    border-radius: 8px;
+    border-color: $black-transparent-30;
+    outline: none;
+    color: $default-color;
+    font-size: 1rem;
+    font-weight: 500;
+
+    &::placeholder{
+      color: $black-transparent-30;
+      font-size: .85rem;
+    }
+
+    &:focus, &:active{
+      border-color: $default-color;
+      border-width: 2px;
+    }
+
+  }
+  .icon{
+    position: absolute;
+    right: 35px;
+    top: 37px;
+    color: $default-color;
+
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
