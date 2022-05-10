@@ -1,3 +1,4 @@
+import { IPlaylist } from './../interfaces/IPlaylist';
 import { Router } from '@angular/router';
 import { IArtist } from './../interfaces/IArtist';
 import { IMusic } from './../interfaces/iMusic';
@@ -5,7 +6,7 @@ import { IUser } from '../interfaces/iUser';
 import { SpotifyConfiguration } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import Spotify from 'spotify-web-api-js';
-import { mapSpotifyUser, SpotifyArtistForArtist, SpotifyCurrentlyPlayingTrackForMusic, SpotifyPlaylistForPlaylist, SpotifySimplifiedTrackForMusic, SpotifyTrackForMusic } from '../Common/spotify.helper';
+import { mapSpotifyUser, SpotifyArtistForArtist, SpotifyCurrentlyPlayingTrackForMusic, SpotifyPlaylistForPlaylist, SpotifySimplifiedTrackForMusic, SpotifySinglePlaylistForSinglePlaylist, SpotifyTrackForMusic, SpotifyTrackObjectFullForMusic } from '../Common/spotify.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -121,5 +122,22 @@ export class SpotifyService {
   async getMyRecentlyPlayedTrack(){
     const songsRecentlyPlayed = await this.spotifyApi.getMyRecentlyPlayedTracks();
     return songsRecentlyPlayed.items.map(song => SpotifySimplifiedTrackForMusic(song.track))[0];
+  }
+
+  async getPlaylist(playlistId: string): Promise<IPlaylist>{
+    const selectedPlaylist = await this.spotifyApi.getPlaylist(playlistId);
+    const playList = SpotifySinglePlaylistForSinglePlaylist(selectedPlaylist);
+    const songsIds = playList.songs;
+    const songs: IMusic[] = [];
+    songsIds.forEach(async songId => {
+      const song = (await this.spotifyApi.getTrack(songId));
+      songs.push(SpotifyTrackObjectFullForMusic(song))
+    });
+    return {
+      id: playList.id,
+      name: playList.name,
+      imgUrl: playList.imgUrl,
+      songs: songs
+    }
   }
 }

@@ -13,14 +13,12 @@ import { Subscription } from 'rxjs';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  songsRecentlyPlayed: IMusic[] = null;
-  playIcon = faPlay;
-  currentlyPlaying: IMusic = newMusic();
   subs: Subscription[] = [];
+  playIcon = faPlay;
+  songsRecentlyPlayed: IMusic[] = null;
+  currentlyPlaying: IMusic = newMusic();
 
-  constructor(
-    private spotifyService: SpotifyService,
-    private playerService: PlayerService) { }
+  constructor(private spotifyService: SpotifyService, private playerService: PlayerService) { }
 
   ngOnInit(): void {
     this.getCurrentlyPlayingMusic();
@@ -29,6 +27,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  async getMyRecentlyPlayedSongs(){
+    this.songsRecentlyPlayed = await this.spotifyService.getMyRecentlyPlayedTracks();
   }
 
   getCurrentlyPlayingMusic(){
@@ -43,16 +45,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.playerService.setCurrentlyPlayingTrack(music);
   }
 
-  async getMyRecentlyPlayedSongs(){
-    this.songsRecentlyPlayed = await this.spotifyService.getMyRecentlyPlayedTracks();
-  }
-
-  
-
   getArtist(music:IMusic){
     return music.artists.map(artist => artist.name).join(', ');
   }
-
-
-
 }
