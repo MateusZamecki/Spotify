@@ -8,9 +8,11 @@
 
 
 ```sh
-  Projeto feito com intuito de aprender a utilizar de forma clara e coesa uma API disponivel com um framework single page 
-application, aplicando todos os conhecimentos de SOLID que possuo, também, utilizei um wrapper para facilitar a comunicação
-com a real API spotify
+  Projeto feito com intuito de aprender a utilizar de forma clara e coesa uma API disponivel 
+  com um framework single page 
+  application, aplicando todos os conhecimentos de SOLID que possuo, também, utilizei 
+  um wrapper para facilitar a comunicação
+  com a real API spotify
 ```
 
 🔗 Toda a documentação: <a href="https://github.com/thelinmichael/spotify-web-api-node.git">wrapper</a>
