@@ -26,5 +26,5 @@
 ## Executar a aplicação
 Para executar a aplicação, execute o seguinte comando no terminal:
 ```sh
-npm start | yarn start
+npm start | yarn start | ng serve
 ```
