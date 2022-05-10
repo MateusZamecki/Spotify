@@ -35,6 +35,23 @@ export function SpotifyPlaylistForPlaylist(playlist: SpotifyApi.PlaylistObjectSi
   };
 }
 
+export function SpotifySinglePlaylistForSinglePlaylist(playlist: SpotifyApi.SinglePlaylistResponse){
+  if(playlist.images.length > 0){
+    return {
+      id: playlist.id,
+      name: playlist.name,
+      imgUrl: playlist.images.pop().url,
+      songs: playlist.tracks.items.map(x => x.track.id)
+    };
+  }
+  return {
+    id: playlist.id,
+    name: playlist.name,
+    imgUrl: '',
+    songs: playlist.tracks.items.map(x => x.track.id)
+  };
+}
+
 export function SpotifySinglePlaylistForPlaylist(playlist: SpotifyApi.SinglePlaylistResponse ): IPlaylist {
   if (!playlist)
     return newPlaylist();
@@ -56,6 +73,49 @@ export function SpotifySinglePlaylistForPlaylist(playlist: SpotifyApi.SinglePlay
 
 export function SpotifyTrackForMusic(spotifyTrack: SpotifyApi.TrackObjectFull) : IMusic{
 
+  if (!spotifyTrack)
+    return newMusic();
+
+  const msToMinutes = (ms: number) => {
+    const data = addMilliseconds(new Date(0), ms);
+    return format(data, 'mm:ss');
+  }
+  if(spotifyTrack.album.images.length > 0){
+    return {
+      id: spotifyTrack.uri,
+      title: spotifyTrack.name,
+      album: {
+        id: spotifyTrack.id,
+        imgUrl: spotifyTrack.album.images.shift().url,
+        name: spotifyTrack.album.name
+      },
+      artists: spotifyTrack.artists.map(artist => ({
+        id: artist.id,
+        name: artist.name
+      })),
+      time: msToMinutes(spotifyTrack.duration_ms),
+      imgUrl: spotifyTrack.album.images[0].url
+    }
+  }
+  return {
+    id: spotifyTrack.uri,
+    title: spotifyTrack.name,
+    album: {
+      id: spotifyTrack.id,
+      imgUrl: spotifyTrack.album.images.shift().url,
+      name: spotifyTrack.album.name
+    },
+    artists: spotifyTrack.artists.map(artist => ({
+      id: artist.id,
+      name: artist.name
+    })),
+    time: msToMinutes(spotifyTrack.duration_ms),
+    imgUrl: ''
+  }
+
+}
+
+export function SpotifyTrackObjectFullForMusic(spotifyTrack: SpotifyApi.SingleTrackResponse) : IMusic{
   if (!spotifyTrack)
     return newMusic();
 

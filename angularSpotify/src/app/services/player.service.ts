@@ -19,7 +19,6 @@ export class PlayerService {
 
   async getMyCurrentlyPlayingTrack(){
     clearTimeout(this.timerId);
-
     const currentlyPlaying = await this.spotifyService.getMyCurrentlyPlayingTrack();
     this.setCurrentlyPlayingTrack(currentlyPlaying);
     this.timerId = setInterval(async () => {
